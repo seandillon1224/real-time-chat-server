@@ -1,0 +1,27 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+      "baseUrl": "./",
+      "allowJs": false,
+      "declaration": true,
+      "skipLibCheck": true,
+      "strict": true,
+      "forceConsistentCasingInFileNames": true,
+      "noEmit": true,
+      "module": "esnext",
+      "moduleResolution": "node",
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "noImplicitReturns": true,
+      "stripInternal": true,
+      "resolveJsonModule": true,
+      "esModuleInterop": true
+    },
+    "include": [
+      "**/*.ts",
+    ],
+    "exclude": [
+      "node_modules"
+    ]
+  }
+  

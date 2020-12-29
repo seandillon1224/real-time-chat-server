@@ -5,8 +5,8 @@ import { IMessage } from "./message";
 const { ObjectId } = mongoose.Schema.Types;
 
 export interface IChatRoom extends Document {
-  messages: [IMessage]
-  users: [IUser]
+  messages: [IMessage];
+  users: [IUser];
   createdAt: Date;
 }
 
@@ -16,6 +16,7 @@ const ChatRoomSchema: Schema = new Schema({
   createdAt: { type: Date },
 });
 
-const ChatRoom : Model<IChatRoom> = mongoose.models.ChatRoom || model("ChatRoom", ChatRoomSchema);
+const ChatRoom: Model<IChatRoom> =
+  mongoose.models.ChatRoom || model("ChatRoom", ChatRoomSchema);
 
 export default ChatRoom;

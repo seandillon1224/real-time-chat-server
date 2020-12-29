@@ -1,27 +1,24 @@
 {
-    "compileOnSave": true,
-    "compilerOptions": {
-      "baseUrl": "./",
-      "allowJs": false,
-      "declaration": true,
-      "skipLibCheck": true,
-      "strict": true,
-      "forceConsistentCasingInFileNames": true,
-      "noEmit": true,
-      "module": "esnext",
-      "moduleResolution": "node",
-      "noUnusedLocals": true,
-      "noUnusedParameters": true,
-      "noImplicitReturns": true,
-      "stripInternal": true,
-      "resolveJsonModule": true,
-      "esModuleInterop": true
-    },
-    "include": [
-      "**/*.ts",
-    ],
-    "exclude": [
-      "node_modules"
-    ]
-  }
-  
+  "compileOnSave": true,
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "outDir": "./dist",
+    "allowJs": true,
+    "declaration": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": false,
+    "module": "commonjs",
+    "target": "es5",
+    "types": ["node"],
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitReturns": true,
+    "stripInternal": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true
+  },
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules"]
+}

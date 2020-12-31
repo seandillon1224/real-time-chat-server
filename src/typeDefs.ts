@@ -21,10 +21,14 @@ const typeDefs = gql`
     email: String
     name: String!
     password: String!
-    messages: [Message]!
-    chatRooms: [Chatroom]!
     createdAt: Date!
-    theme: Theme!
+    refreshTokens: [RefreshToken]
+    # theme: Theme!
+  }
+
+  type RefreshToken {
+    hash: String!
+    expiry: Date!
   }
 
   type AuthUser {
@@ -39,12 +43,6 @@ const typeDefs = gql`
     createdAt: Date!
   }
 
-  type Query {
-    messages: [Message]!
-    users: [User]!
-    chatrooms: [Chatroom]!
-  }
-
   input UserInput {
     name: String!
     email: String
@@ -56,13 +54,36 @@ const typeDefs = gql`
     password: String!
   }
 
+  input ChatroomInput {
+    creator: String!
+    invitees: [String!]!
+    message: String!
+  }
+
+  input MessageInput {
+    user: String!
+    chatroom: String!
+    content: String!
+  }
+
+  type Query {
+    messages: [Message]!
+    users: [User]!
+    chatrooms: [Chatroom]!
+    chatroomsByUser: [Chatroom]!
+  }
+
   type Mutation {
-    makeMessage(user: String!, content: String!): Message!
+    createMessage(input: MessageInput!): Message!
+    createChatRoom(input: ChatroomInput!): Chatroom!
     createUser(input: UserInput!): AuthUser!
     login(input: LoginInput!): AuthUser
+    refreshUserToken(userId: ID!): AuthUser!
+    signOutUser(userId: ID!): Boolean!
   }
   type Subscription {
-    messageAdded(chatroomId: Int!): Message!
+    messageAdded(chatroomId: String!): Message!
+    chatrooms(user: String!): Chatroom!
   }
 `;
 

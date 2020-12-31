@@ -5,14 +5,14 @@ import { IMessage } from "./message";
 const { ObjectId } = mongoose.Schema.Types;
 
 export interface IChatRoom extends Document {
-  messages: [IMessage];
+  messages?: [IMessage];
   users: [IUser];
   createdAt: Date;
 }
 
 const ChatRoomSchema: Schema = new Schema({
-  messages: [{ type: ObjectId, ref: "Message" }],
-  chatRooms: [{ type: ObjectId, ref: "User" }],
+  messages: [{ type: ObjectId, ref: "Message", default: [] }],
+  users: [{ type: ObjectId, ref: "User" }],
   createdAt: { type: Date },
 });
 

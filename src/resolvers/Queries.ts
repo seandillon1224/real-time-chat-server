@@ -33,6 +33,14 @@ const Queries: ResolverMap = {
       throw new Error("An error occurred fetching Chatroom!");
     }
   },
+  chatroomsByUser: authenticated(async (_, __, { ChatRoom, user }) => {
+    try {
+      const rooms = await ChatRoom.find({ users: user._id });
+      return rooms;
+    } catch (err) {
+      throw new Error("An error occurred querying chatrooms by user");
+    }
+  }),
 };
 
 export default Queries;

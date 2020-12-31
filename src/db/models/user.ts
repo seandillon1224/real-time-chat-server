@@ -6,18 +6,19 @@ export interface IUser extends Document {
   name: string;
   password: string;
   email: string;
-  messages: [string];
-  chatRooms: [string];
   createdAt: Date;
+  refreshTokens: {
+    hash: string;
+    expiry: Date;
+  }[];
 }
 
 const UserSchema: Schema = new Schema({
   name: { type: String, required: true },
   password: { type: String, required: true },
   email: { type: String },
-  messages: [{ type: ObjectId, ref: "Message" }],
-  chatRooms: [{ type: ObjectId, ref: "ChatRoom" }],
   createdAt: { type: Date },
+  refreshTokens: [{ hash: { type: String }, expiry: { type: Date } }],
 });
 
 const User: Model<IUser> = mongoose.models.User || model("User", UserSchema);

@@ -1,13 +1,29 @@
 import { ResolverSubscriptionMap } from "types";
-import pubsub from "./pubsub";
+import pubsub from "./resolverUtils/pubsub";
 import { withFilter } from "apollo-server";
-import { MESSAGE_ADDED } from "./constants";
+import { MESSAGE_ADDED, CHATROOM_ADDED } from "./resolverUtils/constants";
+import { IUser } from "db/models/user";
 
 const Subscriptions: ResolverSubscriptionMap = {
   messageAdded: {
     subscribe: withFilter(
       () => pubsub.asyncIterator(MESSAGE_ADDED),
-      (payload, args) => args.chatroomId === 1
+      (payload, args) =>
+        payload.messageAdded.chatroom.toString() === args.chatroomId.toString()
+    ),
+  },
+  chatrooms: {
+    subscribe: withFilter(
+      () => pubsub.asyncIterator(CHATROOM_ADDED),
+      (payload, __, ctx) => {
+        const getsMessage = payload.chatrooms.users.find(
+          (z: IUser) => z._id.toString() === ctx.user._id.toString()
+        );
+        if (getsMessage) {
+          return true;
+        }
+        return false;
+      }
     ),
   },
   // users: {

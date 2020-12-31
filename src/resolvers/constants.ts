@@ -1,3 +1,0 @@
-const MESSAGE_ADDED = "MESSAGE_ADDED";
-
-export { MESSAGE_ADDED };

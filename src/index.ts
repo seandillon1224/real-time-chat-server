@@ -6,8 +6,7 @@ import db from "./db/models";
 import { getUserFromToken, createToken } from "./auth";
 import { Date } from "./scalars";
 import mongoose from "mongoose";
-import apolloHeaders from "./utils/apollo-headers";
-import { CookieInterface, ContextCallback, ConnectionParams } from "types";
+import { ContextCallback, ConnectionParams } from "types";
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -27,27 +26,24 @@ if (process.env.MONGO_URI) {
 const apolloServer = new ApolloServer({
   typeDefs,
   resolvers: { ...resolvers, Date },
-  plugins: [apolloHeaders],
   context: async ({ req, connection }: ContextCallback) => {
-    const setCookies: CookieInterface | [] = [];
     if (connection) {
-      return { ...db, req, ...connection.context, setCookies };
+      return { ...db, req, ...connection.context };
     } else {
       const token = req.headers.authorization || "";
       const user = await getUserFromToken(token);
 
-      return { ...db, req, user, createToken, setCookies };
+      return { ...db, req, user, createToken };
     }
   },
   subscriptions: {
     async onConnect(connectionParams: ConnectionParams) {
-      const setCookies: CookieInterface | [] = [];
       if (connectionParams.authorization) {
         const user = await getUserFromToken(connectionParams.authorization);
         if (!user) {
           throw new AuthenticationError("not authedd");
         }
-        return { user, setCookies };
+        return { user };
       }
       throw new AuthenticationError("not authenticated!");
     },

@@ -78,7 +78,6 @@ const typeDefs = gql`
     createChatRoom(input: ChatroomInput!): Chatroom!
     createUser(input: UserInput!): AuthUser!
     login(input: LoginInput!): AuthUser
-    refreshUserToken(userId: ID!): AuthUser!
     signOutUser(userId: ID!): Boolean!
   }
   type Subscription {
